@@ -22,7 +22,7 @@ pub struct Mail {
     pub from_name: String,
     pub reply_to: String,
     pub date: String,
-    pub attachments: HashMap<String, String>,
+    pub attachments: HashMap<String, Vec<u8>>,
     pub content: HashMap<String, String>,
     pub headers: HashMap<String, String>,
     pub x_smtpapi: String,
@@ -119,8 +119,8 @@ impl Mail {
     /// ```
     pub fn add_attachment<P: AsRef<Path>>(&mut self, path: P) -> SendgridResult<()> {
         let mut file = File::open(&path)?;
-        let mut data = String::new();
-        file.read_to_string(&mut data)?;
+        let mut data: Vec<u8> = vec![];
+        file.read_to_end(&mut data)?;
 
         if let Some(name) = path.as_ref().to_str() {
             self.attachments.insert(String::from(name), data);

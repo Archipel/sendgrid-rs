@@ -4,6 +4,10 @@ extern crate error_chain;
 #[macro_use]
 extern crate serde_derive;
 
+#[macro_use]
+extern crate json;
+
+extern crate base64;
 extern crate data_encoding;
 extern crate reqwest;
 extern crate serde;
